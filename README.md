@@ -13,32 +13,37 @@ To install, download or clone the repo, then:
 
 ## Develop Client
 
-To run truffle tests:
+To run the application contract tests:
 
-`truffle test ./test/flightSurety.js`
-`truffle test ./test/oracles.js`
+`npm run test`
+
+To run the oracle tests, first make sure ganache is started with a minimum of 20 accounts and listen at the port 7545:
+
+`npm run test:oracles`
+
+## Deploy
+
+To deploy the contracts, first make sure ganache is started and listen at the port 7545:
+
+`npm run deploy`
 
 To use the dapp:
 
-`truffle migrate`
 `npm run dapp`
 
 To view dapp:
 
 `http://localhost:8000`
 
+To build dapp for prod:
+`npm run dapp:prod`
+
 ## Develop Server
 
 `npm run server`
 `truffle test ./test/oracles.js`
 
-## Deploy
-
-To build dapp for prod:
-`npm run dapp:prod`
-
 Deploy the contents of the ./dapp folder
-
 
 ## Resources
 

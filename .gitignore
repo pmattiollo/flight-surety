@@ -24,6 +24,9 @@ coverage
 # nyc test coverage
 .nyc_output
 
+# secret
+.secret
+
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
@@ -41,6 +44,7 @@ build
 # Dependency directories
 node_modules/
 jspm_packages/
+package-lock.json
 
 # Typescript v1 declaration files
 typings/
@@ -64,3 +68,6 @@ typings/
 .env
 
 ~$*.pptx
+
+# Intellij
+.idea
