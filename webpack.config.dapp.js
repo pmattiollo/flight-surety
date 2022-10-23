@@ -7,8 +7,14 @@ module.exports = {
     path: path.join(__dirname, "prod/dapp"),
     filename: "bundle.js"
   },
+  ignoreWarnings: [/Failed to parse source map/],
   module: {
     rules: [
+    {
+        test: /\.js$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
+    },
     {
         test: /\.(js|jsx)$/,
         use: "babel-loader",

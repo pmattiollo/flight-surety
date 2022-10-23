@@ -23,7 +23,7 @@ To run the oracle tests, first make sure ganache is started with a minimum of 20
 
 ## Deploy
 
-To deploy the contracts, first make sure ganache is started and listen at the port 7545:
+To deploy the contracts, first make sure truffle development is started and listen at the port 9545:
 
 `npm run deploy`
 

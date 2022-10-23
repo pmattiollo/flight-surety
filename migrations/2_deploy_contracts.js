@@ -12,7 +12,7 @@ module.exports = function(deployer, networks, accounts) {
                 .then(async () => {
                     let config = {
                         localhost: {
-                            url: 'http://localhost:7545',
+                            url: 'http://localhost:9545',
                             dataAddress: FlightSuretyData.address,
                             appAddress: FlightSuretyApp.address
                         }
@@ -22,6 +22,10 @@ module.exports = function(deployer, networks, accounts) {
 
                     const dataContract = await FlightSuretyData.at(FlightSuretyData.address);
                     await dataContract.authorizeCaller(FlightSuretyApp.address, { from: owner });
+
+                    console.log("Owner: ", owner);
+
+                    console.log("Migration done", config);
                 });
     });
 }

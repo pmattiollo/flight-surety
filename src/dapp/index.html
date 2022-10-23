@@ -4,30 +4,131 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <title>FlightSurety</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-dark bg-dark justify-content-center">
         <a class="navbar-brand" href="#">FlightSurety</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
     </nav>
 
-    <main class="container">
+    <div class="container-fluid top-20">
 
-        <div id="display-wrapper" class="top-20">
-        </div>
-        <div class="row top-20">
-            <label class="form">Flight</label> <input type="text" id="flight-number"> <btn class="btn btn-primary" id="submit-oracle">Submit to Oracles</btn>
-        </div>
-    </main>
+        <div class="modal" tabindex="-1" id="flight-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Flight request</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body" id="flight-modal-body">
+                            <div class="form-group">
+                                <label for="flight-modal-body-input-airline">Select an airline</label>
+                                <select class="form-control" id="flight-modal-body-input-airline">
+                                    <option selected>...</option>
+                                </select>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="flight-modal-body-input-code">Code</label>
+                                <input type="text" class="form-control" id="flight-modal-body-input-code" placeholder="KL558">
+                            </div>
+
+                            <div class="form-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
+                                <label for="flight-modal-body-input-date">Departure time</label>
+                                <input type="text" class="form-control" id="flight-modal-body-input-date">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="flight-modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div id="display-wrapper" class="col"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                <div class="row">
+                    <div class="col-sm">
+                        <h2>Airlines</h2>
+                        <table class="table">
+                            <caption>List of the registered airlines</caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Name</th>
+                            </tr>
+                            </thead>
+                            <tbody id="airlines-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <h2>Passengers</h2>
+                        <table class="table">
+                            <caption>List of the passengers</caption>
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Address</th>
+                            </tr>
+                            </thead>
+                            <tbody id="passengers-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm">
+                <h2>Flights</h2>
+                <table class="table">
+                    <caption>List of the registered flights</caption>
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Airline</th>
+                        <th scope="col">Scheduled to</th>
+                    </tr>
+                    </thead>
+                    <tbody id="flights-table-body">
+                    </tbody>
+                </table>
+
+                <button id="flights-table-fetch-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#flight-modal">Fetch flight</button>
+                <button id="flights-table-fetch-airline-button" type="button" class="btn btn-primary">Fetch airlines</button>
+                <button id="flights-table-fetch-flights-button" type="button" class="btn btn-primary">Fetch flights</button>
+                <button id="flights-table-register-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#flight-modal">Register flight</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
-
 </html>

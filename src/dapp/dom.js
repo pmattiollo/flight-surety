@@ -1,5 +1,7 @@
 // Source: https://hackernoon.com/how-i-converted-my-react-app-to-vanillajs-and-whether-or-not-it-was-a-terrible-idea-4b14b1b2faff
 
+import {child} from "truffle/build/6793.bundled";
+
 export default class DOM {
 
     static a = (...args) => DOM.makeElement(`a`, ...args);
@@ -15,6 +17,7 @@ export default class DOM {
     static p = (...args) => DOM.makeElement(`p`, ...args);
     static span = (...args) => DOM.makeElement(`span`, ...args);
     static img = (...args) => DOM.makeElement(`img`, ...args);
+    static th = (...args) => DOM.makeElement(`th`, ...args);
     static td = (...args) => DOM.makeElement(`td`, ...args);
     static attributeExceptions = [
       `role`,
@@ -84,6 +87,12 @@ export default class DOM {
       if (otherChildren) DOM.appendArray(el, otherChildren);
     
       return el;
+    }
+
+    static removeElement(parent, ...children) {
+        if (children) {
+            children.forEach(child => parent.removeChild(child));
+        }
     }
   }
     

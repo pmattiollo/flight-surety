@@ -1,17 +1,15 @@
-var HDWalletProvider = require("@truffle/hdwallet-provider");
-var mnemonic = "gain narrow swear castle entry brand country inflict resemble choose enhance mandate";
-
 module.exports = {
   networks: {
+    // ganache: {
+    //   host: "localhost",
+    //   port: 7545,
+    //   network_id: "*",
+    // },
+
     development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 9545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
-    },
-    ganache: {
       host: "localhost",
-      port: 7545,
-      network_id: "5777"
+      port: 9545,
+      network_id: "*",
     },
   },
 
@@ -27,9 +25,9 @@ module.exports = {
       // docker: true,        // Use ".0.51" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
-      //    enabled: false,
+      //    enabled: true,
       //    runs: 200
-      //  },
+      // },
       //  evmVersion: "byzantium"
       // }
     }

@@ -9,8 +9,9 @@
   "license": "MIT",
   "scripts": {
     "test": "truffle test ./test/flightSurety.js",
-    "test:oracles": "truffle test ./test/oracles.js --network ganache",
-    "deploy": "truffle deploy --network ganache",
+    "test:oracles": "truffle test ./test/oracles.js --network development",
+    "start": "truffle development",
+    "deploy": "truffle migrate --network development",
     "dapp": "webpack-dev-server --mode development --config webpack.config.dapp.js",
     "dapp:prod": "webpack --mode production --config webpack.config.dapp.js",
     "server": "rm -rf ./build/server && webpack --config webpack.config.server.js"
@@ -34,6 +35,7 @@
     "file-loader": "6.2.0",
     "html-loader": "4.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "source-map-loader": "^4.0.1",
     "start-server-nestjs-webpack-plugin": "^2.2.5",
     "start-server-webpack-plugin": "2.2.5",
     "style-loader": "^3.3.1",

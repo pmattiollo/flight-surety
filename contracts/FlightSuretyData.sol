@@ -86,10 +86,10 @@ contract FlightSuretyData is AccessControl, Ownable, Pausable {
     event AirlineFunded(address indexed airline);
     event AirlineVoted(address indexed voter, address indexed airline, bool vote);
 
-    event FlightRegistered(bytes32 indexed key);
-    event FlightUpdated(bytes32 indexed key, uint8 state);
+    event FlightRegistered(address indexed airline, string flight, uint256 timestamp);
+    event FlightUpdated(address indexed airline, string flight, uint256 timestamp, uint8 state);
 
-    event InsurancePurchased(bytes32 indexed flight, address indexed passenger);
+    event InsurancePurchased(address indexed airline, string flight, uint256 timestamp, address passenger);
 
     /**
     * @dev Constructor
@@ -423,6 +423,10 @@ contract FlightSuretyData is AccessControl, Ownable, Pausable {
         });
 
         approvedAirlinesCount.increment();
+
+        emit AirlineCreated(airline);
+        emit AirlineApproved(airline);
+        emit AirlineFunded(airline);
     }
 
     /********************************************************************************************/
@@ -574,7 +578,22 @@ contract FlightSuretyData is AccessControl, Ownable, Pausable {
             state: 0
         });
 
-        emit FlightRegistered(key);
+        emit FlightRegistered(airline, flight, timestamp);
+    }
+
+    function fetchFlight(address airline,
+                         string memory flight,
+                         uint256 timestamp)
+        external
+        view
+        whenNotPaused
+        whenAuthorized
+        whenAirlineExists(airline)
+        whenFlightExists(airline, flight, timestamp)
+        returns (address, string memory, uint256, uint256, uint8)
+    {
+        bytes32 key = getFlightKey(airline, flight, timestamp);
+        return (flights[key].airline, flights[key].name, flights[key].createdAt, flights[key].scheduledTo, flights[key].state);
     }
 
     /**
@@ -596,7 +615,7 @@ contract FlightSuretyData is AccessControl, Ownable, Pausable {
         bytes32 key = getFlightKey(airline, flight, timestamp);
         flights[key].state = state;
 
-        emit FlightUpdated(key, state);
+        emit FlightUpdated(airline, flight, timestamp, state);
     }
 
    /**
@@ -628,7 +647,7 @@ contract FlightSuretyData is AccessControl, Ownable, Pausable {
             amount: amount
         }));
 
-        emit InsurancePurchased(key, passenger);
+        emit InsurancePurchased(airline, flight, timestamp, passenger);
     }
 
     /**
